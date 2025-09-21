@@ -6,5 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('libros', LibroController::class);
 Route::apiResource('usuarios', App\Http\Controllers\UserController::class);
+Route::apiResource('prestamos', App\Http\Controllers\PrestamoController::class);
+
 
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\PrestamoResource;
 use App\Models\Prestamo;
 use Illuminate\Http\Request;
 
@@ -10,11 +10,18 @@ class PrestamoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+         $query = Prestamo::query();
+        if ($s = $request->query('search')) { 
+                $query->where('fecha_prestamo', 'like', "%{$s}%")
+                  ->orWhere('libro_id', 'like', "%{$s}%")
+                  ->orWhere('estado', 'like', "%{$s}%");
+        
+        }
+        return PrestamoResource::collection($query->orderBy('libro_id', 'desc')->paginate(5));
     }
-
     /**
      * Show the form for creating a new resource.
      */
